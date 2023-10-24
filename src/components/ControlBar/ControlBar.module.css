@@ -1,0 +1,37 @@
+.buttonStop {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+}
+.buttonStop:hover {
+    background-color: #c9ecf9;
+
+}
+.controlBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 20px;
+}
+.stockWatchingGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+    padding: 5px;
+    /* width: 200px; */
+    cursor: pointer;
+    background-color: #c9ecf9;
+    border-radius: 10px;
+}
+.stockWatchingGroup > span {
+    font-size: 30px;
+  
+}
+span > p {
+    margin: 0;
+}
