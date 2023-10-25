@@ -11,16 +11,22 @@ import { useDispatch } from 'react-redux';
 import DoneIcon from '@mui/icons-material/Done';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import {
+	setAddWatchingGroup,
 	setDeleteWatchingGroup,
-	setWatchingGroup,
 } from '../../store/stockData/actionCreators';
 
 export const StockComponent = ({ data }) => {
-	console.log(data);
+	let isChooseData;
+	let isChooseElementLoc = localStorage.getItem(`chooseElement_${data.ticker}`);
+	isChooseElementLoc !== null
+		? (isChooseData = isChooseElementLoc)
+		: (isChooseData = false);
+	const currentUrl = window.location.pathname.slice(1);
 	const [prevPrice, setPrevPrice] = useState(null);
 	const [currPrice, setCurrPrice] = useState(data.price);
-	const [isChooseElement, setChooseElement] = useState(false);
+	const [isChooseElement, setChooseElement] = useState(isChooseData);
 	const dispatch = useDispatch();
+	let watchingGroup = JSON.parse(localStorage.getItem(`watch_group`)) || [];
 
 	const percentChange =
 		prevPrice !== null ? ((currPrice - prevPrice) / prevPrice) * 100 : 0;
@@ -81,56 +87,80 @@ export const StockComponent = ({ data }) => {
 			<li>{data.dividend}</li>
 			<li>{formatData(data.last_trade_time)}</li>
 			<li>
-				{!isChooseElement && (
-					<Tooltip
-						title={<Typography fontSize={20}>Add to watching group</Typography>}
-						placement='bottom'
-					>
-						<AddCircleOutlineIcon
-							fontSize='large'
-							sx={{ color: '#5abde2' }}
-							onClick={() => {
-								dispatch(setWatchingGroup(data));
-								setChooseElement(true);
-							}}
-						/>
-					</Tooltip>
-				)}
-				{isChooseElement && (
-					<div className={css.doneRemoveIcons}>
+				<div className={css[currentUrl ? '' : 'doneRemoveIcons']}>
+					{isChooseElement &&
+						JSON.parse(localStorage.getItem(`chooseElement_${data.ticker}`)) &&
+						!currentUrl && (
+							<Tooltip
+								title={
+									<Typography fontSize={20}>Added to watching group</Typography>
+								}
+								placement='bottom'
+							>
+								<DoneIcon fontSize='large' sx={{ color: 'rgb(4, 109, 50)' }} />
+							</Tooltip>
+						)}
+					{JSON.parse(localStorage.getItem(`chooseElement_${data.ticker}`)) &&
+						isChooseData && (
+							<Tooltip
+								title={
+									<Typography fontSize={20}>
+										Remove from watching group
+									</Typography>
+								}
+								placement='bottom'
+							>
+								<RemoveCircleOutlineOutlinedIcon
+									fontSize='large'
+									sx={{ color: 'rgb(153, 7, 7)' }}
+									onClick={() => {
+										dispatch(setDeleteWatchingGroup(data.ticker));
+										setChooseElement(false);
+										localStorage.setItem(`chooseElement_${data.ticker}`, false);
+										let watchingGroup = JSON.parse(
+											localStorage.getItem(`watch_group`)
+										);
+
+										let newGroup = watchingGroup.filter((group) => {
+											return group.ticker !== data.ticker;
+										});
+
+										localStorage.setItem(
+											`watch_group`,
+											JSON.stringify(newGroup)
+										);
+									}}
+								/>
+							</Tooltip>
+						)}
+				</div>
+				{(!JSON.parse(localStorage.getItem(`chooseElement_${data.ticker}`)) ||
+					!isChooseElement) &&
+					!currentUrl && (
 						<Tooltip
 							title={
-								<Typography fontSize={20}>
-									Remove from watching group
-								</Typography>
+								<Typography fontSize={20}>Add to watching group</Typography>
 							}
 							placement='bottom'
 						>
-							<RemoveCircleOutlineOutlinedIcon
+							<AddCircleOutlineIcon
 								fontSize='large'
-								sx={{ color: 'rgb(153, 7, 7)' }}
+								sx={{ color: '#5abde2' }}
 								onClick={() => {
-									dispatch(setDeleteWatchingGroup(data.ticker));
-									setChooseElement(false);
+									dispatch(setAddWatchingGroup(data));
+									setChooseElement(true);
+									localStorage.setItem(`chooseElement_${data.ticker}`, true);
+
+									watchingGroup.push(data);
+
+									localStorage.setItem(
+										`watch_group`,
+										JSON.stringify(watchingGroup)
+									);
 								}}
 							/>
 						</Tooltip>
-						<Tooltip
-							title={
-								<Typography fontSize={20}>Added to watching group</Typography>
-							}
-							placement='bottom'
-						>
-							<DoneIcon
-								fontSize='large'
-								sx={{ color: 'rgb(4, 109, 50)' }}
-								// onClick={() =>
-								// 	dispatch(setNumberOFWatchlists(numberOfWatchLiasts + 1))
-								// }
-							/>
-						</Tooltip>
-					</div>
-				)}
+					)}
 			</li>
 		</div>
 	);

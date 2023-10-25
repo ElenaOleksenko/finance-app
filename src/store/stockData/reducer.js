@@ -3,7 +3,6 @@ const initialState = {
 	stockData: [],
 	error: null,
 	watchingGroup: [],
-	// numberOfWatchLiasts: 0,
 };
 
 const stockReducer = (state = initialState, action) => {
@@ -14,10 +13,10 @@ const stockReducer = (state = initialState, action) => {
 		case 'SET_STOCK_DATA':
 			return { ...state, stockData: action.payload };
 
-		// case 'SET_PREV_PRICE':
-		// 	return { ...state, prevPrice: action.payload };
-
 		case 'SET_WATCHING_GROUP':
+			return { ...state, watchingGroup: action.payload };
+
+		case 'SET_ADD_WATCHING_GROUP':
 			return {
 				...state,
 				watchingGroup: [...state.watchingGroup, action.payload],

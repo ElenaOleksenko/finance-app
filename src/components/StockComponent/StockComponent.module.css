@@ -28,11 +28,12 @@
     height: 74px;
     }
  }
-
  .stockListWrapper:hover {
     background-color: #ebfaff;
  }
-
+ .stockListWrapper:hover .currPrice {
+   background-color: #ebfaff;
+ }
  .stockListWrapper > li:last-child {
     display: flex;
     justify-content: flex-end;
@@ -78,5 +79,4 @@
    flex-direction: row;
    justify-content: space-between;
    width: 90px;
-
  }

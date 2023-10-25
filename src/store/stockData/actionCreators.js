@@ -1,4 +1,5 @@
 import {
+	SET_ADD_WATCHING_GROUP,
 	SET_DELETE_WATCHING_GROUP,
 	SET_IS_FETCHING,
 	SET_STOCK_DATA,
@@ -14,9 +15,13 @@ export const setStockData = (data) => ({
 	type: SET_STOCK_DATA,
 	payload: data,
 });
-
-export const setWatchingGroup = (group) => ({
+export const setWatchingGroup = (data) => ({
 	type: SET_WATCHING_GROUP,
+	payload: data,
+});
+
+export const setAddWatchingGroup = (group) => ({
+	type: SET_ADD_WATCHING_GROUP,
 	payload: group,
 });
 

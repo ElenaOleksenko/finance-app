@@ -1,0 +1,11 @@
+.containerExistWrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .errorContainerExist {
+    font-size: 1.7em;
+    margin-bottom: 20px;
+  }

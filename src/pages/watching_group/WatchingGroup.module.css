@@ -1,0 +1,26 @@
+.emptyListContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 200px;
+    font-size: 40px;
+}
+.stockHeaderWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+  }
+  .stockHeaderWrapper {
+    background-color: #5abde2;
+  }
+  
+  .stockHeaderContainer {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    align-items: center;
+    height: 72px;
+    padding: 0 5px;
+  }
+  .stockHeaderContainer > div {
+    font-size: 25px;
+  } 
+  

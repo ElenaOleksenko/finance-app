@@ -1,53 +1,19 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import io from 'socket.io-client';
-import { setIsFetching, setStockData } from './store/stockData/actionCreators';
-import { StockComponent } from './components/StockComponent/StockComponent';
-import { baseUrl, titleArray } from './constants/constants';
-import css from './App.module.css';
-import { ControlBar } from './components/ControlBar/ControlBar';
+import { Route, Routes } from 'react-router-dom';
+import { Main } from './pages/main/Main';
+
+// import css from './App.module.css';
+import { WatchingGroup } from './pages/watching_group/WatchingGroup';
+import { NotFound } from './pages/not-found/NotFound';
 
 function App() {
-	const dispatch = useDispatch();
-	const { isFetching, stockData, numberOfWatchLiasts } = useSelector(
-		(state) => state.stockData
-	);
-
-	useEffect(() => {
-		const socket = io.connect(baseUrl);
-		socket.emit('start');
-
-		const handleTickerData = (response) => {
-			if (isFetching) {
-				console.log('Отримано дані з сервера:', response);
-				dispatch(setStockData(response));
-			}
-		};
-
-		socket.on('ticker', handleTickerData);
-
-		return () => {
-			socket.off('ticker', handleTickerData);
-			socket.disconnect();
-		};
-	}, [isFetching, dispatch]);
-
 	return (
-		<div className={css.stockWrapper}>
-			<ControlBar />
-			<div className={css.stockHeaderWrapper}>
-				<div className={css.stockHeaderContainer}>
-					{titleArray.map((el) => {
-						return <div key={el.id}>{el.title}</div>;
-					})}
-				</div>
-			</div>
-			<ul className={css.stockContainer}>
-				{stockData.map((data, index) => {
-					return <StockComponent key={index} data={data} />;
-				})}
-			</ul>
-		</div>
+		<>
+			<Routes>
+				<Route path='/' element={<Main />} />
+				<Route path='watching_group' element={<WatchingGroup />} />
+				<Route path='*' element={<NotFound />} />
+			</Routes>
+		</>
 	);
 }
 

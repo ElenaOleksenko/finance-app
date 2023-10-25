@@ -1,0 +1,10 @@
+.arrowContainer {
+    display: flex;
+    flex-direction: row;
+    font-size: 30px;
+    margin: 80px 0 40px 30px;
+    cursor: pointer;
+}
+.arrowContainer p {
+    margin: 0;
+}
