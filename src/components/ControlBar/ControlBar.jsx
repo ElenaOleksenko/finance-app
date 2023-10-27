@@ -5,7 +5,6 @@ import PauseIcon from '@mui/icons-material/Pause';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsFetching } from '../../store/stockData/actionCreators';
 import { useNavigate } from 'react-router-dom';
-
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -17,7 +16,6 @@ export const ControlBar = () => {
 	const { watchingGroup } = useSelector((state) => state.stockData);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
 	let watch_group;
 	let watch_groupLoc = JSON.parse(localStorage.getItem(`watch_group`));
 	watch_groupLoc !== null
@@ -33,7 +31,6 @@ export const ControlBar = () => {
 	};
 
 	const handleButtonClick = (time) => {
-		console.log('click');
 		dispatch(setIsFetching(false));
 		setTimeout(() => {
 			dispatch(setIsFetching(true));
@@ -52,6 +49,7 @@ export const ControlBar = () => {
 							startFetching();
 						}}
 						className={css.buttonStop}
+						data-testid='start-button'
 					>
 						<ReplayIcon fontSize='large' />
 					</button>
@@ -64,6 +62,7 @@ export const ControlBar = () => {
 						onClick={() => {
 							stopFetching();
 						}}
+						data-testid='stop-button'
 						className={css[isFetching ? 'buttonStop' : 'buttonStopActive']}
 					>
 						<PauseIcon fontSize='large' />
@@ -142,6 +141,7 @@ export const ControlBar = () => {
 					onClick={() => {
 						navigate('watching_group');
 					}}
+					data-testid='navigate-watch-group'
 				>
 					<Badge
 						badgeContent={watch_group.length}

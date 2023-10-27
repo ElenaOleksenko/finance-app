@@ -1,7 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import { Main } from './pages/main/Main';
-
-// import css from './App.module.css';
 import { WatchingGroup } from './pages/watching_group/WatchingGroup';
 import { NotFound } from './pages/not-found/NotFound';
 

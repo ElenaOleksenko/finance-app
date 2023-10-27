@@ -1,7 +1,6 @@
 const initialState = {
 	isFetching: true,
 	stockData: [],
-	error: null,
 	watchingGroup: [],
 };
 

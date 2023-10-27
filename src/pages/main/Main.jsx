@@ -9,7 +9,6 @@ import { ControlBar } from '../../components/ControlBar/ControlBar';
 
 export const Main = () => {
 	const dispatch = useDispatch();
-
 	const { isFetching, stockData } = useSelector((state) => state.stockData);
 
 	useEffect(() => {
@@ -18,7 +17,6 @@ export const Main = () => {
 
 		const handleTickerData = (response) => {
 			if (isFetching) {
-				// console.log('Отримано дані з сервера:', response);
 				dispatch(setStockData(response));
 			}
 		};
@@ -29,7 +27,7 @@ export const Main = () => {
 			socket.off('ticker', handleTickerData);
 			socket.disconnect();
 		};
-	}, [isFetching, dispatch]);
+	}, [dispatch, isFetching]);
 
 	return (
 		<div className={css.stockWrapper}>

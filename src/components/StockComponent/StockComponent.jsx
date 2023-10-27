@@ -88,54 +88,48 @@ export const StockComponent = ({ data }) => {
 			<li>{formatData(data.last_trade_time)}</li>
 			<li>
 				<div className={css[currentUrl ? '' : 'doneRemoveIcons']}>
-					{isChooseElement &&
-						JSON.parse(localStorage.getItem(`chooseElement_${data.ticker}`)) &&
-						!currentUrl && (
-							<Tooltip
-								title={
-									<Typography fontSize={20}>Added to watching group</Typography>
-								}
-								placement='bottom'
-							>
-								<DoneIcon fontSize='large' sx={{ color: 'rgb(4, 109, 50)' }} />
-							</Tooltip>
-						)}
-					{JSON.parse(localStorage.getItem(`chooseElement_${data.ticker}`)) &&
-						isChooseData && (
-							<Tooltip
-								title={
-									<Typography fontSize={20}>
-										Remove from watching group
-									</Typography>
-								}
-								placement='bottom'
-							>
-								<RemoveCircleOutlineOutlinedIcon
-									fontSize='large'
-									sx={{ color: 'rgb(153, 7, 7)' }}
-									onClick={() => {
-										dispatch(setDeleteWatchingGroup(data.ticker));
-										setChooseElement(false);
-										localStorage.setItem(`chooseElement_${data.ticker}`, false);
-										let watchingGroup = JSON.parse(
-											localStorage.getItem(`watch_group`)
-										);
+					{isChooseElement && JSON.parse(isChooseElementLoc) && !currentUrl && (
+						<Tooltip
+							title={
+								<Typography fontSize={20}>Added to watching group</Typography>
+							}
+							placement='bottom'
+						>
+							<DoneIcon fontSize='large' sx={{ color: 'rgb(4, 109, 50)' }} />
+						</Tooltip>
+					)}
+					{JSON.parse(isChooseElementLoc) && isChooseData && (
+						<Tooltip
+							title={
+								<Typography fontSize={20}>
+									Remove from watching group
+								</Typography>
+							}
+							placement='bottom'
+						>
+							<RemoveCircleOutlineOutlinedIcon
+								data-testid='remove-icon'
+								fontSize='large'
+								sx={{ color: 'rgb(153, 7, 7)' }}
+								onClick={() => {
+									dispatch(setDeleteWatchingGroup(data.ticker));
+									setChooseElement(false);
+									localStorage.setItem(`chooseElement_${data.ticker}`, false);
+									let watchingGroup = JSON.parse(
+										localStorage.getItem(`watch_group`)
+									);
 
-										let newGroup = watchingGroup.filter((group) => {
-											return group.ticker !== data.ticker;
-										});
+									let newGroup = watchingGroup.filter((group) => {
+										return group.ticker !== data.ticker;
+									});
 
-										localStorage.setItem(
-											`watch_group`,
-											JSON.stringify(newGroup)
-										);
-									}}
-								/>
-							</Tooltip>
-						)}
+									localStorage.setItem(`watch_group`, JSON.stringify(newGroup));
+								}}
+							/>
+						</Tooltip>
+					)}
 				</div>
-				{(!JSON.parse(localStorage.getItem(`chooseElement_${data.ticker}`)) ||
-					!isChooseElement) &&
+				{(!JSON.parse(isChooseElementLoc) || !isChooseElement) &&
 					!currentUrl && (
 						<Tooltip
 							title={
@@ -144,6 +138,7 @@ export const StockComponent = ({ data }) => {
 							placement='bottom'
 						>
 							<AddCircleOutlineIcon
+								data-testid='add-icon'
 								fontSize='large'
 								sx={{ color: '#5abde2' }}
 								onClick={() => {

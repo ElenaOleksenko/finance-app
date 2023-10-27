@@ -1,5 +1,6 @@
 import { legacy_createStore as createStore } from 'redux';
 import { combineReducers } from 'redux';
+
 import stockReducer from './stockData/reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
