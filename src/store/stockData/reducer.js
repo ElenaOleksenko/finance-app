@@ -5,6 +5,7 @@ const initialState = {
 };
 
 const stockReducer = (state = initialState, action) => {
+	console.log(action);
 	switch (action.type) {
 		case 'SET_IS_FETCHING':
 			return { ...state, isFetching: action.payload };

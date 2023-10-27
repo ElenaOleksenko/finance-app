@@ -10,10 +10,12 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import { Timer } from './components/Timer';
 
 export const ControlBar = () => {
 	const { isFetching } = useSelector((state) => state.stockData);
 	const { watchingGroup } = useSelector((state) => state.stockData);
+	const [timeCurr, setTimeCurr] = React.useState(0);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	let watch_group;
@@ -24,6 +26,7 @@ export const ControlBar = () => {
 
 	const stopFetching = () => {
 		dispatch(setIsFetching(false));
+		setTimeCurr(0);
 	};
 
 	const startFetching = () => {
@@ -35,6 +38,10 @@ export const ControlBar = () => {
 		setTimeout(() => {
 			dispatch(setIsFetching(true));
 		}, time);
+	};
+
+	const clickTime = (time) => {
+		setTimeCurr(time);
 	};
 
 	return (
@@ -96,6 +103,17 @@ export const ControlBar = () => {
 							<Menu {...bindMenu(popupState)}>
 								<MenuItem
 									onClick={() => {
+										clickTime(5000);
+										handleButtonClick(5000);
+										popupState.close();
+									}}
+									sx={{ width: '150px', height: '50px', fontSize: '20px' }}
+								>
+									5S
+								</MenuItem>
+								<MenuItem
+									onClick={() => {
+										clickTime(15000);
 										handleButtonClick(15000);
 										popupState.close();
 									}}
@@ -106,6 +124,7 @@ export const ControlBar = () => {
 								<MenuItem
 									onClick={() => {
 										handleButtonClick(30000);
+										clickTime(30000);
 										popupState.close();
 									}}
 									sx={{ width: '150px', height: '50px', fontSize: '20px' }}
@@ -115,6 +134,7 @@ export const ControlBar = () => {
 								<MenuItem
 									onClick={() => {
 										handleButtonClick(60000);
+										clickTime(60000);
 										popupState.close();
 									}}
 									sx={{ width: '150px', height: '50px', fontSize: '20px' }}
@@ -125,6 +145,7 @@ export const ControlBar = () => {
 								<MenuItem
 									onClick={() => {
 										handleButtonClick(120000);
+										clickTime(120000);
 										popupState.close();
 									}}
 									sx={{ width: '150px', height: '50px', fontSize: '20px' }}
@@ -135,6 +156,8 @@ export const ControlBar = () => {
 						</React.Fragment>
 					)}
 				</PopupState>
+
+				<Timer timeCurr={timeCurr} />
 
 				<div
 					className={css.stockWatchingGroup}

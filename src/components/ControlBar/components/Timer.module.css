@@ -1,0 +1,7 @@
+.timerContainer {
+    display: flex;
+    flex-direction: row;
+}
+.time {
+    font-size: 1.6em;
+}

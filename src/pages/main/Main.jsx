@@ -20,9 +20,7 @@ export const Main = () => {
 				dispatch(setStockData(response));
 			}
 		};
-
 		socket.on('ticker', handleTickerData);
-
 		return () => {
 			socket.off('ticker', handleTickerData);
 			socket.disconnect();
